@@ -28,7 +28,16 @@ struct Node{
 		Edge e(w, next);
 		edges.push_back(e);
 	}
+
 };
+
+void dfs(Node* node){
+	std::cout<<node->value<<std::endl;
+
+	for(int i=0;i<node->edges.size();i++){
+		dfs(node->edges[i].next);
+	}
+}
 
 int main() {
 	std::vector<Node> graph;
@@ -57,6 +66,8 @@ int main() {
 	graph.push_back(n4);
 	graph.push_back(n5);
 	graph.push_back(n6);
+
+	dfs(&graph[0]);
 
 	return 0;
 }
