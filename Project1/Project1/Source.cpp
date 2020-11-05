@@ -2,43 +2,52 @@
 #include <fstream>
 #include <vector>
 
-int main(int argc, char* argv[]) {
-	std::cout << "value in argc:" << argc << std::endl;
+struct Edge{
+	float weight;
+	struct Node* next;
 
-	std::string input_file, output_file;
+	Edge(float w, Node* n){
+		weight=weight;
+		next=n;
+	}
+};
 
-	for(int i=0;i<argc;i++){
-		if(std::string(argv[i])=="-i"){
-			input_file=argv[i+1];
-		}
+struct Node{
+	int value;
+	std::vector<Edge> edges;
 
-		if(std::string(argv[i])=="-o"){
-			output_file=argv[i+1];
-		}
+	Node(float v){
+		value=v;
 	}
 
-	std::cout<<"input file: "<<input_file<<std::endl;
-	std::cout<<"output file: "<<input_file<<std::endl;
-
-	std::ifstream source(input_file);
-
-	std::vector<std::string> lines;
-	std::string tmp;
-	if(source.is_open()){
-		while(getline(source,tmp)){
-			lines.push_back(tmp);
-		}
-		source.close();
+	void addEdge(Edge& e){
+		edges.push_back(e);
 	}
 
-	std::ofstream destination(output_file);
-
-	if(destination.is_open()){
-		for(int i=0;i<lines.size();i++){
-			destination<<lines[i]<<"\n";
-		}
-		destination.close();
+	void connect(float w, Node* next){
+		Edge e(w, next);
+		edges.push_back(e);
 	}
+};
+
+int main() {
+	std::vector<Node> graph;
+
+	Node n0(0);
+	Node n1(1);
+	Node n2(2);
+
+	n0.connect(1.5,&n1);
+	n0.connect(3.1,&n2);
+
+	Node new_node(123);
+
+	n0.connect(5.6,&new_node);
+
+	graph.push_back(n0);
+	graph.push_back(n1);
+	graph.push_back(n2);
+	graph.push_back(new_node);
 
 	return 0;
 }
