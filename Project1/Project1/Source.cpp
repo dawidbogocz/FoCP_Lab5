@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <vector>
 
 int main(int argc, char* argv[]) {
 	std::cout << "value in argc:" << argc << std::endl;
@@ -17,6 +19,26 @@ int main(int argc, char* argv[]) {
 
 	std::cout<<"input file: "<<input_file<<std::endl;
 	std::cout<<"output file: "<<input_file<<std::endl;
+
+	std::ifstream source(input_file);
+
+	std::vector<std::string> lines;
+	std::string tmp;
+	if(source.is_open()){
+		while(getline(source,tmp)){
+			lines.push_back(tmp);
+		}
+		source.close();
+	}
+
+	std::ofstream destination(output_file);
+
+	if(destination.is_open()){
+		for(int i=0;i<lines.size();i++){
+			destination<<lines[i]<<"\n";
+		}
+		destination.close();
+	}
 
 	return 0;
 }
